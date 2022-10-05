@@ -1,0 +1,59 @@
+public class AgeInputParser {
+    private static String getMessage(String msg) {
+        if (!msg.isEmpty()) {
+            return msg.substring(3, msg.length()-1);
+        }
+        else {
+            return msg;
+        }
+    }
+
+    public static AgeInputContainer parseInputs(String inputText) {
+        AgeInputContainer ai = new AgeInputContainer();
+        String[] lines = inputText.split("\n");
+        for (String line : lines) {
+            int pos = 0;
+            int posBuff = 0;
+            StringBuilder sbExp = new StringBuilder();
+            StringBuilder sbMsg = new StringBuilder();
+            while (pos < line.length()) {
+                char c = line.charAt(pos);
+                if (c == '-') {
+                    // ? -m" pattern
+                    boolean isMSG = true;
+                    posBuff = pos;
+                    do {
+                        sbMsg.append(c);
+                        pos++;
+                        // Not -m" pattern
+                        if (sbMsg.length() == 3 && !sbMsg.toString().equals("-m\"")) {
+                            pos = posBuff;
+                            isMSG = false;
+                            sbMsg.setLength(0);
+                            break;
+                        }
+                        if (pos >= line.length()) {
+                            break;
+                        }
+                        c = line.charAt(pos);
+                    } while (true);
+
+                    // Just operand '-'
+                    if (!isMSG) {
+                        c = line.charAt(pos);
+                        sbExp.append(c);
+                        pos++;
+                    }
+                } else if (c == ' ') {
+                    // trim " "
+                    pos++;
+                } else {
+                    sbExp.append(c);
+                    pos++;
+                }
+            }
+            ai.addExpressionWithDescription(sbExp.toString().toLowerCase(), getMessage(sbMsg.toString()));
+        }
+        return ai;
+    }
+}
