@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class AgeProvider {
@@ -21,6 +22,10 @@ public class AgeProvider {
         String token = sb.toString();
 
         int beg = message.indexOf("=");
+        if (beg == -1) {
+            throw new RuntimeException("Invalid syntax at " + pos + ". '=' is not found");
+        }
+
         int end = message.indexOf("\n");
         if (end == -1) {
             end = message.length();
@@ -52,4 +57,44 @@ public class AgeProvider {
         result = aiOutputs.toString();
         return result;
     }
+
+    public static String startCommandReply() {
+        String neoAge = "???";
+        try {
+            neoAge = AgeDefiner.Age(new SimpleDateFormat("dd.MM.yyyy").parse("02.09.1964")).toString();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "1) Переменные задаются так\n" +
+                "_--config-alias Neo = Age(02.09.1964) -m\"Возраст Киану Ривза\"_\n" +
+                "_--config-alias Schwarz = Age(30.07.1947) -m\"Возраст Арнольда\"_\n" +
+                "_--config-alias aDiff = Diff(02.09.1964, 30.07.1947) -m\"Разница между Шварцом и Киану\"_\n" +
+                "*Neo* - это переменная (только символы 'a..Z')\n" +
+                "*Age(02.09.1964)* - функция (формат даты только такой как тут)\n" +
+                "*-m\"Возраст Киану Ривза\"* - описание (обязательно в кавычках)\n" +
+                "\n" +
+                "2) Можно вызывать переменные или функции\n" +
+                "_> Neo_\n" +
+                "Возраст Киану Ривза:\n" +
+                "  " + neoAge + "\n" +
+                "\n" +
+                "_> aDiff_\n" +
+                "Разница между Шварцом и Киану:\n" +
+                "  17 years 1 month 3 days\n" +
+                "\n" +
+                "_> Diff(31.03.1999, 02.09.1964) -m\"Возраст Киану на момент релиза Матрицы\"_\n" +
+                "Возраст Киану на момент релиза Матрицы:\n" +
+                "    34 years 6 months 29 days\n" +
+                "\n" +
+                "3) Можно складывать и вычитать\n" +
+                "_> Age(30.07.1947) - Age(02.09.1964)_\n" +
+                "17 years 1 months 3 days\n" +
+                "\n" +
+                "_> Schwarz - Neo -m\"Разница между Шварцом и Киану\"_\n" +
+                "Разница между Шварцом и Киану:\n" +
+                "  17 years 1 months 3 days\n" +
+                "\n" +
+                "_P.S. Бот 'клал' такси Bolt на GDPR. Он собирает и использует все что Вы ему отдаете_";
+    }
+
 }

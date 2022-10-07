@@ -15,7 +15,7 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
     @Override
     public String getBotUsername() {
         return "AgeDefinerBot";
-        //Debug: return "DebugAppRustBot";
+//        return "DebugAppRustBot";//Debug
     }
 
     @Override
@@ -28,7 +28,7 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
             e.printStackTrace();
         }
         return result;
-        //Debug return "5765430991:AAEAftF48zI2Mx-jzWNyVcPoTPO6-55_f8g";
+//        return "5765430991:AAEAftF48zI2Mx-jzWNyVcPoTPO6-55_f8g"; //Debug
     }
 
     @Override
@@ -36,43 +36,51 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
         String message = update.getMessage().getText();
         String chatID = update.getMessage().getChatId().toString();
         String userID = update.getMessage().getFrom().getId().toString();
+        String reply = null;
 
-        if (message.contains("--config-alias") || message.contains("--config-utc")) {
-            //doConfigParsing
+        if (message.equals("/start")) {
+            reply = AgeProvider.startCommandReply();
+            sendMessage(chatID, reply, true);
+        }
+        else if (message.contains("--config-alias") || message.contains("--config-utc")) {
             try {
                 AgeProvider.doConfigParsing(userID, message);
+                sendMessage(chatID, "_Done!_", true);
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (Exception e) {
+                reply = e.getMessage();
+                sendMessage(chatID, reply, false);
+                throw e;
             }
         }
         else {
             //doParsing and reply
-            String reply = null;
             try {
                 reply = AgeProvider.doParsingAndCalc(userID, message);
             } catch (ParseException e) {
                 e.printStackTrace();
             } catch (Exception e) {
                 reply = e.getMessage();
-                try {
-                    sendMessage(chatID, reply);
-                } catch (TelegramApiException ex) {
-                    ex.printStackTrace();
-                }
+                sendMessage(chatID, reply, false);
                 throw e;
             }
-            try {
-                sendMessage(chatID, reply);
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
+
+            sendMessage(chatID, reply, false);
         }
     }
 
-    private void sendMessage(String chatID, String reply) throws TelegramApiException {
+    private void sendMessage(String chatID, String reply, boolean enableMarkdown) {
         SendMessage message = new SendMessage();
+        if (enableMarkdown) {
+            message.enableMarkdown(true);
+        }
         message.setChatId(chatID);
         message.setText(reply);
-        execute(message);
+        try {
+            execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
 }
