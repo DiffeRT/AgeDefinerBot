@@ -1,2 +1,7 @@
 Age.secret
+Age.jar
+_deploy.cmd
 db/
+.idea/
+out/
+target/
