@@ -11,10 +11,11 @@ public class AgeProvider {
         StringBuilder sb = new StringBuilder();
         while (pos < message.length()) {
             char c = message.charAt(pos);
-            if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')) {
+            //support num in var: m1, t800
+            if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9')) {
                 sb.append(c);
             }
-            else if (c == ' ' && sb.length() > 0) {
+            else if ((c == ' ' || c == '=') && sb.length() > 0) {
                 break;
             }
             pos++;
