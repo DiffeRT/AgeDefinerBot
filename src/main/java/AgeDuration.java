@@ -68,6 +68,10 @@ public class AgeDuration {
         }
     }
 
+    public AgeDuration unaryNegative() {
+        return new AgeDuration(y, m, d, !is_negative);
+    }
+
     @Override
     public String toString() {
         String age_length;

@@ -36,7 +36,7 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
         String message = update.getMessage().getText();
         String chatID = update.getMessage().getChatId().toString();
         String userID = update.getMessage().getFrom().getId().toString();
-        String reply = null;
+        String reply;
 
         if (message.equals("/start")) {
             reply = AgeProvider.startCommandReply();
@@ -60,6 +60,7 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
                 reply = AgeProvider.doParsingAndCalc(userID, message);
             } catch (ParseException e) {
                 e.printStackTrace();
+                reply = e.getMessage();
             } catch (Exception e) {
                 reply = e.getMessage();
                 sendMessage(chatID, reply, false);
