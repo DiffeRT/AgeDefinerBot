@@ -221,7 +221,9 @@ public class LexemeAnalyser {
 
     public static Date date(Lexeme lexeme) throws ParseException {
         if (lexeme.type == LexemeType.DATE) {
-            return new SimpleDateFormat("dd.MM.yyyy").parse(lexeme.value);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            sdf.setLenient(false);
+            return sdf.parse(lexeme.value);
         }
         else {
             throw new RuntimeException("Date format at: " + lexeme.value);
