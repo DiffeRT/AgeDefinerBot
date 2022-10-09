@@ -116,7 +116,7 @@ public class LexemeAnalyser {
                                 break;
                             }
                             c = expText.charAt(pos);
-                        } while (c >= 'a' && c <= 'z');
+                        } while ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')); //support num in var: m1, t800
                         if (pos < expText.length() && c == '(') {
                             isFunc = true;
                         }
