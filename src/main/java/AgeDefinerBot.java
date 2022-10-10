@@ -2,33 +2,35 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.Properties;
 
 public class AgeDefinerBot extends TelegramLongPollingBot {
 
+    private final String BOT_USER_NAME;
+    private final String BOT_TOKEN;
+
+    public AgeDefinerBot() {
+        Properties props = new Properties();
+        try {
+            props.load(new FileInputStream("Age.config"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BOT_USER_NAME = props.getProperty("BOT_USER_NAME");
+        BOT_TOKEN = props.getProperty("BOT_TOKEN");
+    }
+
     @Override
     public String getBotUsername() {
-        return "AgeDefinerBot";
-//        return "DebugAppRustBot";//Debug
+        return BOT_USER_NAME;
     }
 
     @Override
     public String getBotToken() {
-        Path pathSecret = Paths.get(System.getProperty("user.dir")).resolve("Age.secret");
-        String result = null;
-        try {
-            result = new String(Files.readAllBytes(pathSecret), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-//        return "5765430991:AAEAftF48zI2Mx-jzWNyVcPoTPO6-55_f8g"; //Debug
+        return BOT_TOKEN;
     }
 
     @Override
