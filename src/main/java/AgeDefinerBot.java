@@ -11,6 +11,7 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
 
     private final String BOT_USER_NAME;
     private final String BOT_TOKEN;
+    private final AgeDeleteProvider deleteProvider;
 
     public AgeDefinerBot() {
         Properties props = new Properties();
@@ -21,6 +22,7 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
         }
         BOT_USER_NAME = props.getProperty("BOT_USER_NAME");
         BOT_TOKEN = props.getProperty("BOT_TOKEN");
+        deleteProvider = new AgeDeleteProvider();
     }
 
     @Override
@@ -43,6 +45,30 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
         if (message.equals("/start")) {
             reply = AgeProvider.startCommandReply();
             sendMessage(chatID, reply, true);
+        }
+        else if (message.contains("--config-alias-delete") || deleteProvider.waitingConfirmation(userID)) {
+            if (deleteProvider.waitingConfirmation(userID)) {
+                try {
+                    reply = deleteProvider.confirmDeletion(userID, message);
+                } catch (IOException e) {
+                    reply = e.getMessage();
+                    e.printStackTrace();
+                }
+                sendMessage(chatID, reply, true);
+            }
+            else {
+                reply = deleteProvider.requestDeletion(userID, message);
+                sendMessage(chatID, reply, false);
+            }
+        }
+        else if (message.contains("--config-alias-show")) {
+            try {
+                reply = AgeProvider.doShowUserData(userID, message);
+                sendMessage(chatID, reply, false);
+            } catch (Exception e) {
+                reply = e.getMessage();
+                sendMessage(chatID, reply, false);
+            }
         }
         else if (message.contains("--config-alias") || message.contains("--config-utc")) {
             try {
