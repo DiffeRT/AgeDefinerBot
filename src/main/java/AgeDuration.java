@@ -1,17 +1,17 @@
 public class AgeDuration {
     private final int AVG_MONTH = 30;  //The Gregorian (western) solar calendar has 365.2425/12 = 30.44 days
-    private final boolean is_negative;
+    private final boolean isNegative;
     private final int y, m, d;
 
-    public AgeDuration(int years, int months, int days, boolean is_negative) {
-        this.is_negative = is_negative;
+    public AgeDuration(int years, int months, int days, boolean isNegative) {
+        this.isNegative = isNegative;
         this.y = years;
         this.m = months;
         this.d = days;
     }
 
     public AgeDuration Add(AgeDuration other) {
-        if (this.is_negative == other.is_negative) {
+        if (this.isNegative == other.isNegative) {
             int years = this.y + other.y;
             int months = this.m + other.m;
             int days = this.d + other.d;
@@ -25,9 +25,9 @@ public class AgeDuration {
                 years++;
             }
 
-            return new AgeDuration(years, months, days, this.is_negative);
+            return new AgeDuration(years, months, days, this.isNegative);
         }
-        else if (other.is_negative) {
+        else if (other.isNegative) {
             return this.Sub(other);
         }
         else {
@@ -68,6 +68,10 @@ public class AgeDuration {
         }
     }
 
+    public AgeDuration unaryNegative() {
+        return new AgeDuration(y, m, d, !isNegative);
+    }
+
     @Override
     public String toString() {
         String age_length;
@@ -80,7 +84,7 @@ public class AgeDuration {
         else {
             age_length = String.format("%d %s", d, getDimName("day", d));
         }
-        if (this.is_negative) {
+        if (this.isNegative) {
             age_length = "- " + age_length;
         }
         return age_length;
@@ -99,7 +103,7 @@ public class AgeDuration {
     public boolean equals(Object obj) {
         if (obj instanceof AgeDuration) {
             AgeDuration other = (AgeDuration) obj;
-            return this.is_negative == other.is_negative && this.y == other.y && this.m == other.m && this.d == other.d;
+            return this.isNegative == other.isNegative && this.y == other.y && this.m == other.m && this.d == other.d;
         }
         else {
             return false;

@@ -45,6 +45,38 @@ public class AgeTokenProvider {
         saveToFile();
     }
 
+    public boolean deleteAllTokens() throws IOException {
+        tokensTable.clear();
+        saveToFile();
+        return true;
+    }
+
+    public boolean deleteToken(String key) throws IOException {
+        TokenValue tv = tokensTable.remove(key);
+        saveToFile();
+        return tv != null;
+    }
+
+    public String showTokens(String key) {
+        String result;
+        if (!key.isEmpty()) {
+            result = getTokenExpression(key) + "\n" + getTokenDescription(key) + "\n";
+        }
+        else {
+            StringBuilder sb = new StringBuilder();
+            for (String oKey: tokensTable.keySet()) {
+                sb.append(oKey)
+                        .append(":\n    ")
+                        .append(getTokenExpression(oKey))
+                        .append("\n    ")
+                        .append(getTokenDescription(oKey))
+                        .append("\n");
+            }
+            result = sb.toString();
+        }
+        return result;
+    }
+
     private void initDBPath() {
         Path path = Paths.get(System.getProperty("user.dir")).resolve("db");
         if (!Files.exists(path)) {
@@ -88,7 +120,6 @@ public class AgeTokenProvider {
 
         ObjectMapper mapper = new ObjectMapper();
         String jsonResult = mapper.writeValueAsString(tokensTable);
-        //System.out.println(jsonResult);
 
         FileWriter file = new FileWriter(filePath.toString());
         file.write(jsonResult);

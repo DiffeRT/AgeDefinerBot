@@ -6,8 +6,7 @@ import java.util.List;
 public class AgeProvider {
 
     public static void doConfigParsing(String userID, String message) throws IOException {
-        //"--config-alias"
-        int pos = 14;
+        int pos = "--config-alias".length();
         StringBuilder sb = new StringBuilder();
         while (pos < message.length()) {
             char c = message.charAt(pos);
@@ -59,6 +58,28 @@ public class AgeProvider {
         return result;
     }
 
+    public static String doShowUserData(String userID, String message) {
+        AgeTokenProvider atp = new AgeTokenProvider(userID);
+        String key;
+        int pos = "--config-alias-show".length();
+        StringBuilder sb = new StringBuilder();
+        while (pos < message.length()) {
+            char c = message.charAt(pos);
+            if (c != ' ') {
+                sb.append(c);
+            }
+            pos++;
+        }
+        key = sb.toString();
+
+        if (key.isEmpty() || atp.containsKey(key)) {
+            return atp.showTokens(key);
+        }
+        else {
+            throw new RuntimeException("Unknown token: " + key);
+        }
+    }
+
     public static String startCommandReply() {
         String neoAge = "???";
         try {
@@ -70,7 +91,7 @@ public class AgeProvider {
                 "_--config-alias Neo = Age(02.09.1964) -m\"Возраст Киану Ривза\"_\n" +
                 "_--config-alias Schwarz = Age(30.07.1947) -m\"Возраст Арнольда\"_\n" +
                 "_--config-alias aDiff = Diff(02.09.1964, 30.07.1947) -m\"Разница между Шварцом и Киану\"_\n" +
-                "*Neo* - это переменная (только символы 'a..Z')\n" +
+                "*Neo* - это переменная (только символы 'a..Z' и цифры)\n" +
                 "*Age(02.09.1964)* - функция (формат даты только такой как тут)\n" +
                 "*-m\"Возраст Киану Ривза\"* - описание (обязательно в кавычках)\n" +
                 "\n" +

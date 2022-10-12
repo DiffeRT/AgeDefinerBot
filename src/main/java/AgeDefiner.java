@@ -12,22 +12,27 @@ public class AgeDefiner {
 
         int days, months, years;
 
-        if (d2_d >= d1_d) {
-            days = d2_d - d1_d;
+        if (date_2.after(date_1)) {
+            if (d2_d >= d1_d) {
+                days = d2_d - d1_d;
+            }
+            else {
+                d2_m--;
+                days = (d2_d + DateUtils.daysInMonth(d1_y, d1_m) - d1_d);
+            }
+            if (d2_m >= d1_m) {
+                months = d2_m - d1_m;
+            }
+            else {
+                d2_y--;
+                months = (d2_m + 12) - d1_m;
+            }
+            years = d2_y - d1_y;
+            return new AgeDuration(years, months, days, false);
         }
         else {
-            d2_m--;
-            days = (d2_d + DateUtils.daysInMonth(d1_y, d1_m) - d1_d);
+            return Diff(date_1, date_2).unaryNegative();
         }
-        if (d2_m >= d1_m) {
-            months = d2_m - d1_m;
-        }
-        else {
-            d2_y--;
-            months = (d2_m + 12) - d1_m;
-        }
-        years = d2_y - d1_y;
-        return new AgeDuration(years, months, days, false);
     }
 
     public static AgeDuration Age(Date date) {

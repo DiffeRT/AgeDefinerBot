@@ -2,33 +2,37 @@ import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.Properties;
 
 public class AgeDefinerBot extends TelegramLongPollingBot {
 
+    private final String BOT_USER_NAME;
+    private final String BOT_TOKEN;
+    private final AgeDeleteProvider deleteProvider;
+
+    public AgeDefinerBot() {
+        Properties props = new Properties();
+        try {
+            props.load(new FileInputStream("Age.config"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BOT_USER_NAME = props.getProperty("BOT_USER_NAME");
+        BOT_TOKEN = props.getProperty("BOT_TOKEN");
+        deleteProvider = new AgeDeleteProvider();
+    }
+
     @Override
     public String getBotUsername() {
-        return "AgeDefinerBot";
-//        return "DebugAppRustBot";//Debug
+        return BOT_USER_NAME;
     }
 
     @Override
     public String getBotToken() {
-        Path pathSecret = Paths.get(System.getProperty("user.dir")).resolve("Age.secret");
-        String result = null;
-        try {
-            result = new String(Files.readAllBytes(pathSecret), StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return result;
-//        return "5765430991:AAEAftF48zI2Mx-jzWNyVcPoTPO6-55_f8g"; //Debug
+        return BOT_TOKEN;
     }
 
     @Override
@@ -36,11 +40,35 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
         String message = update.getMessage().getText();
         String chatID = update.getMessage().getChatId().toString();
         String userID = update.getMessage().getFrom().getId().toString();
-        String reply = null;
+        String reply;
 
         if (message.equals("/start")) {
             reply = AgeProvider.startCommandReply();
             sendMessage(chatID, reply, true);
+        }
+        else if (message.contains("--config-alias-delete") || deleteProvider.waitingConfirmation(userID)) {
+            if (deleteProvider.waitingConfirmation(userID)) {
+                try {
+                    reply = deleteProvider.confirmDeletion(userID, message);
+                } catch (IOException e) {
+                    reply = e.getMessage();
+                    e.printStackTrace();
+                }
+                sendMessage(chatID, reply, true);
+            }
+            else {
+                reply = deleteProvider.requestDeletion(userID, message);
+                sendMessage(chatID, reply, false);
+            }
+        }
+        else if (message.contains("--config-alias-show")) {
+            try {
+                reply = AgeProvider.doShowUserData(userID, message);
+                sendMessage(chatID, reply, false);
+            } catch (Exception e) {
+                reply = e.getMessage();
+                sendMessage(chatID, reply, false);
+            }
         }
         else if (message.contains("--config-alias") || message.contains("--config-utc")) {
             try {
@@ -60,6 +88,7 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
                 reply = AgeProvider.doParsingAndCalc(userID, message);
             } catch (ParseException e) {
                 e.printStackTrace();
+                reply = e.getMessage();
             } catch (Exception e) {
                 reply = e.getMessage();
                 sendMessage(chatID, reply, false);
