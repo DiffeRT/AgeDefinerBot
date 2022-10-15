@@ -70,7 +70,7 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
                 sendMessage(chatID, reply, false);
             }
         }
-        else if (message.contains("--config-alias") || message.contains("--config-utc")) {
+        else if (message.contains("--config-alias")) {
             try {
                 AgeProvider.doConfigParsing(userID, message);
                 sendMessage(chatID, "_Done!_", true);

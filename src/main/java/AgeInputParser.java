@@ -1,4 +1,5 @@
 public class AgeInputParser {
+    //-m"The message is here" -> The message is here
     private static String getMessage(String msg) {
         if (!msg.isEmpty()) {
             return msg.substring(3, msg.length()-1);
@@ -9,11 +10,11 @@ public class AgeInputParser {
     }
 
     public static AgeInputContainer parseInputs(String inputText) {
-        AgeInputContainer ai = new AgeInputContainer();
+        AgeInputContainer aiResult = new AgeInputContainer();
         String[] lines = inputText.split("\n");
         for (String line : lines) {
             int pos = 0;
-            int posBuff = 0;
+            int posBuff;
             StringBuilder sbExp = new StringBuilder();
             StringBuilder sbMsg = new StringBuilder();
             while (pos < line.length()) {
@@ -52,8 +53,8 @@ public class AgeInputParser {
                     pos++;
                 }
             }
-            ai.addExpressionWithDescription(sbExp.toString().toLowerCase(), getMessage(sbMsg.toString()));
+            aiResult.addExpressionWithDescription(sbExp.toString().toLowerCase(), getMessage(sbMsg.toString()));
         }
-        return ai;
+        return aiResult;
     }
 }
