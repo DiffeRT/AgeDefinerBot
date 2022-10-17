@@ -73,7 +73,11 @@ public class AgeProvider {
         key = sb.toString();
 
         if (key.isEmpty() || atp.containsKey(key)) {
-            return atp.showTokens(key);
+            String result = atp.showTokens(key);
+            if (result.isEmpty()) {
+                throw new RuntimeException("Ну не шмогла я, не шмогла... Там ничего нет. Сначала сохраните что-то используя команду: --config-alias");
+            }
+            return result;
         }
         else {
             throw new RuntimeException("Unknown token: " + key);
@@ -115,6 +119,12 @@ public class AgeProvider {
                 "_> Schwarz - Neo -m\"Разница между Шварцом и Киану\"_\n" +
                 "Разница между Шварцом и Киану:\n" +
                 "  17 years 1 months 3 days\n" +
+                "\n" +
+                "4) Дополнительные возможности\n" +
+                "_--config-alias-show Neo_ - показать ключ Neo\n" +
+                "_--config-alias-show_ - показать все ключи\n" +
+                "_--config-alias-delete aDiff_ - удалить ключ aDiff\n" +
+                "_--config-alias-delete -all_ - удалить все ключи\n" +
                 "\n" +
                 "_P.S. Бот 'клал' такси Bolt на GDPR. Он собирает и использует все что Вы ему отдаете_";
     }

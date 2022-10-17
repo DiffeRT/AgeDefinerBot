@@ -63,6 +63,7 @@ public class AgeDeleteProvider {
             }
         }
         else {
+            usrDeleteState.put(userID, DeleteState.NONE);
             return "_Cancelled!_";
         }
         usrDeleteState.put(userID, DeleteState.NONE);
