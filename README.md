@@ -20,8 +20,14 @@ English version is [here](README.en.md)
 - ***--config-alias*** - ключевое слово, означающее что нужно создать пользовательскую переменную <br>
 - ***VarName*** - допустимое имя переменной (символы 'a..Z' и цифры) <br>
 - ***Expression*** - Любое допустимое выражение. Может содержать функции Age(), Diff() или пользовательскиен переменные.
-И арифмитические операции, например: Age() - Diff() + Variable <br>
-- ***-m*** - optional key param, which required ***"Description"*** after it with no spaces. It supposed to describe variable meaning for you <br>
+И арифмитические операции, например: Age() - Diff() + Variable. Определенме может быть задано следующим образом:
+- - expression : factor ( ( '+' | '-' ) factor )*
+- - factor     : var | func
+- - func       : Age(date) | Diff(date, date)
+- - var        : NAME
+- - date       : dd.mm.yyyy
+- ***-m*** - опциональный ключ, сразу за ним должно следовать описание в кавычках и без пробелов ***"Description"***.
+Его цель описать смысл этого выражения именно для вас <br>
 
 Примеры:
 
