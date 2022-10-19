@@ -20,11 +20,11 @@ where
 - ***VarName*** - the valid name of variable ('a..Z' and digits) <br>
 - ***Expression*** - any valid expression. It can contain Age(), Diff() functions or defined user variables.
   And any arithmetic operations with them like: Age() - Diff() + Variable. Here is the definition:
-- - expression : factor ( ( '+' | '-' ) factor )*
-- - factor     : var | func
-- - func       : Age(date) | Diff(date, date)
-- - var        : NAME
-- - date       : dd.mm.yyyy
+  - expression : factor ( ( '+' | '-' ) factor )*
+  - factor     : var | func
+  - func       : Age(date) | Diff(date, date)
+  - var        : NAME
+  - date       : dd.mm.yyyy
 - ***-m*** - optional key param, which required ***"Description"*** after it with no spaces. It supposed to describe variable meaning for you <br>
 
 Example:
