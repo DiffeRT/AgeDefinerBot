@@ -1,34 +1,43 @@
 # AgeDefiner Java Telegram Bot
 
 The bot can calculate time length between two dates (e.g. age or length of experience etc.).
-The bot can also do arithmetical operations on that lengths.
+Also, the bot can do arithmetical operations on that lengths.
 
 The bot operates as an interpreter of the specific commands. So it should be interacted using its syntax.
 
-<h3>Bot features and syntax with examples</h3>
+## Bot features and syntax with examples
 
 ---
 
 1) User variables can be defined in the following way
+
+The common syntax is:
+
+> --config-alias _VarName_ = _Expression_ -m"_Description_"
+
+where
+- ***--config-alias*** - required key word which tells the system to create new variable for the user <br>
+- ***VarName*** - the valid name of variable ('a..Z' and digits) <br>
+- ***Expression*** - any valid expression. It can contain Age(), Diff() functions or defined user variables.
+  And any arithmetic operations with them. Like: Age() - Diff() + Variable <br>
+- ***-m*** - optional key param, which required ***"Description"*** after it with no spaces. It supposed to describe variable meaning for you <br>
+
+Example:
  
-   _--config-alias Neo = Age(02.09.1964) -m"Keanu Reeves age"_
+>_--config-alias Neo = Age(02.09.1964) -m"Keanu Reeves age"_ <br>
+_--config-alias T800 = Age(30.07.1947) -m"Arnold Schwarzenegger age"_ <br>
+_--config-alias aDiff = Diff(02.09.1964, 30.07.1947) -m"Age difference between Arnold and Keanu"_
    
-   _--config-alias T800 = Age(30.07.1947) -m"Arnold Schwarzenegger age"_
-   
-   _--config-alias aDiff = Diff(02.09.1964, 30.07.1947) -m"Age difference between Arnold and Keanu"_
-   
-**Neo** - is the variable. Symbols 'a..Z' and digits are only supported, non case-sensitive
-
-**Age(02.09.1964)** - is the function (date format is 'dd.mm.yyyy')
-
-**-m"Keanu Reeves age"** - is the description (optional param, should be in quotes "")
+- ***Neo*** - is the variable. Non case-sensitive
+- ***Age(02.09.1964)*** - is the function (date format is 'dd.mm.yyyy')
+- ***-m"Keanu Reeves age"*** - is the description (optional param, should be in quotes "")
 
 2) Variables and functions are supported as input
 
 ````
 > Neo
 Keanu Reeves age:
-  58 years 1 month 10 days
+  58 years 1 month 17 days //at the moment of 19.10.2022
 ````
 
 ````
@@ -61,7 +70,7 @@ Age difference between Arnold and Keanu:
 > Neo
 > Diff(31.03.1999, 02.09.1964) -m"Age of Keanu Reeves on the Matrix release date"
 Keanu Reeves age:
-  58 years 1 month 15 days
+  58 years 1 month 17 days //at the moment of 19.10.2022
 Age of Keanu Reeves on the Matrix release date:
   34 years 6 months 29 days
 ````
