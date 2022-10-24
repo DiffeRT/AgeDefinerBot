@@ -43,7 +43,7 @@ public class AgeDeleteProvider {
         else if (!key.isEmpty()) {
             usrDeleteState.put(userID, DeleteState.WAIT_DELETE_ONE_CONFIRMATION);
             userDeleteParam.put(userID, key);
-            return "You are about to delete " + key + " key. Confirm? [y/n]";
+            return "You are about to delete key " + key + ". Confirm? [y/n]";
         }
         else {
             return "Error! Specific key or -all required";
@@ -53,7 +53,8 @@ public class AgeDeleteProvider {
     public String confirmDeletion(String userID, String message) throws IOException {
         AgeTokenProvider atp = new AgeTokenProvider(userID);
         boolean result = false;
-        if (message.equals("y") || message.equals("yes")) {
+        String msg = message.toLowerCase();
+        if (msg.equals("y") || msg.equals("yes")) {
             if (usrDeleteState.get(userID) == DeleteState.WAIT_DELETE_ALL_CONFIRMATION) {
                 result = atp.deleteAllTokens();
             }
