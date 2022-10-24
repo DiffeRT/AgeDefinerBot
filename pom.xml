@@ -44,7 +44,7 @@
         <dependency>
             <groupId>org.testng</groupId>
             <artifactId>testng</artifactId>
-            <version>7.6.1</version>
+            <version>7.1.0</version>
         </dependency>
     </dependencies>
 
@@ -53,7 +53,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <appendAssemblyId>false</appendAssemblyId> <!-- nicer looking jar name -->
+                    <appendAssemblyId>true</appendAssemblyId> <!-- nicer looking jar name -->
                     <archive>
                         <manifest>
                             <mainClass>Runner</mainClass>
