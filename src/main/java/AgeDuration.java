@@ -111,7 +111,7 @@ public class AgeDuration {
     }
 
     public boolean greaterThan(AgeDuration other) {
-        if (this.y > other.y) {
+        if (this.y > other.y) { //XXX bug then negative
             return true;
         }
         else if (this.y < other.y) {
