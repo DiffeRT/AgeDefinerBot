@@ -52,11 +52,11 @@ public class AgeDefinerTest {
                 {Date.from(new GregorianCalendar(2022, Calendar.JUNE, 15).toInstant()), Date.from(new GregorianCalendar(2019, Calendar.APRIL, 5).toInstant()),
                         new AgeDuration(3, 2, 10, false), "Diff(15.06.2022, 05.04.2019) == 3y 2m 10d"},
                 {Date.from(new GregorianCalendar(2022, Calendar.JUNE, 15).toInstant()), Date.from(new GregorianCalendar(2019, Calendar.APRIL, 25).toInstant()),
-                        new AgeDuration(3, 1, 20, false), "Diff(15.06.2022, 25.04.2019) == 3y 1m 20d"},
+                        new AgeDuration(3, 1, 21, false), "Diff(15.06.2022, 25.04.2019) == 3y 1m 21d"},
                 {Date.from(new GregorianCalendar(2022, Calendar.JUNE, 15).toInstant()), Date.from(new GregorianCalendar(2019, Calendar.JULY, 5).toInstant()),
                         new AgeDuration(2, 11, 10, false), "Diff(15.06.2022, 05.07.2019) == 2y 11m 10d"},
                 {Date.from(new GregorianCalendar(2022, Calendar.JUNE, 15).toInstant()), Date.from(new GregorianCalendar(2019, Calendar.JUNE, 25).toInstant()),
-                        new AgeDuration(2, 11, 20, false), "Diff(15.06.2022, 25.06.2019) == 2y 11m 20d"},
+                        new AgeDuration(2, 11, 21, false), "Diff(15.06.2022, 25.06.2019) == 2y 11m 21d"},
                 //Zero
                 {Date.from(new GregorianCalendar(2022, Calendar.OCTOBER, 5).toInstant()), Date.from(new GregorianCalendar(2022, Calendar.OCTOBER, 5).toInstant()),
                         new AgeDuration(0, 0, 0, false), "Diff(a, a) == 0"},
@@ -119,13 +119,13 @@ public class AgeDefinerTest {
     public Object[][] getAdditional() {
         return new Object[][] {
                 {Date.from(new GregorianCalendar(2009, Calendar.APRIL, 1).toInstant()), Date.from(new GregorianCalendar(2007, Calendar.OCTOBER, 1).toInstant()),
-                        new AgeDuration(1, 6, 0, false), "Diff(01.04.2009,01.10.2007) == 1y 6m 0d"},
+                        new AgeDuration(1, 6, 0, false), "Diff(01.04.2009, 01.10.2007) == 1y 6m 0d"},
                 {Date.from(new GregorianCalendar(2012, Calendar.SEPTEMBER, 28).toInstant()), Date.from(new GregorianCalendar(2009, Calendar.JULY, 29).toInstant()),
-                        new AgeDuration(3, 1, 30, false), "Diff(28.09.2012,29.07.2009) == 3y 1m 30d"},
+                        new AgeDuration(3, 1, 30, false), "Diff(28.09.2012, 29.07.2009) == 3y 1m 30d"},
                 {Date.from(new GregorianCalendar(2016, Calendar.DECEMBER, 30).toInstant()), Date.from(new GregorianCalendar(2013, Calendar.JULY, 22).toInstant()),
-                        new AgeDuration(3, 5, 8, false), "Diff(30.12.2016,22.07.2013) == 3y 5m 8d"},
+                        new AgeDuration(3, 5, 8, false), "Diff(30.12.2016, 22.07.2013) == 3y 5m 8d"},
                 {Date.from(new GregorianCalendar(2022, Calendar.JUNE, 30).toInstant()), Date.from(new GregorianCalendar(2017, Calendar.FEBRUARY, 20).toInstant()),
-                        new AgeDuration(5, 4, 10, false), "Diff(30.06.2022,20.02.2017) == 5y 4m 10d"}
+                        new AgeDuration(5, 4, 10, false), "Diff(30.06.2022, 20.02.2017) == 5y 4m 10d"}
         };
     }
 }
