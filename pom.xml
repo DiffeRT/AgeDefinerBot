@@ -40,6 +40,12 @@
             <version>3.4.2</version>
             <type>maven-plugin</type>
         </dependency>
+        <!--Testing-->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.1.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -47,7 +53,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
-                    <appendAssemblyId>false</appendAssemblyId> <!-- nicer looking jar name -->
+                    <appendAssemblyId>true</appendAssemblyId> <!-- nicer looking jar name -->
                     <archive>
                         <manifest>
                             <mainClass>Runner</mainClass>
