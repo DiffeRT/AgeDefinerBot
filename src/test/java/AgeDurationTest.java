@@ -54,7 +54,7 @@ public class AgeDurationTest {
     @Test(description = "Check Sub() for negative operands", dataProvider = "getSubNegVal")
     public void testSubNegativeVal(AgeDuration operand1, AgeDuration operand2, AgeDuration expected, String message) {
         AgeDuration result = operand1.Sub(operand2);
-        Assert.assertEquals(result, expected, message);
+        Assert.assertEquals(result, expected, message); //BUG
     }
 
     @Test(description = "Check Sub() Associativity")
@@ -158,7 +158,7 @@ public class AgeDurationTest {
     @DataProvider
     public Object[][] getSubPosVal() {
         return new Object[][]{
-                {new AgeDuration(1, 1, 1, false), new AgeDuration(1, 1, 1, false), new AgeDuration(0, 0, 0, false), "a - a == 0"},
+                {new AgeDuration(1, 1, 1, false), new AgeDuration(1, 1, 1, false), new AgeDuration(0, 0, 0, false), "a - a == 0"},  //BUG
                 {new AgeDuration(1, 1, 1, false), new AgeDuration(0, 0, 0, false), new AgeDuration(1, 1, 1, false), "a - 0 == a"},
                 {new AgeDuration(0, 0, 0, false), new AgeDuration(1, 1, 1, false), new AgeDuration(1, 1, 1, true),  "0 - a == -a"},
 
@@ -210,11 +210,11 @@ public class AgeDurationTest {
         return new Object[][]{
                 {new AgeDuration(10, 10, 10, false), new AgeDuration(7, 6, 29, false), new AgeDuration(10, 10, 10, false), "10.10.10 +(-) 7.6.29 -(+) 7.6.29 == 10.10.10"},
                 {new AgeDuration(0, 0, 29, false), new AgeDuration(0, 0, 1, false), new AgeDuration(0, 0, 29, false),      "0.0.29 +(-) 0.0.1 -(+) 0.0.1 == 0.0.29"},
-                {new AgeDuration(0, 0, 30, false), new AgeDuration(0, 0, 1, false), new AgeDuration(0, 0, 30, false),      "0.0.30 +(-) 0.0.1 -(+) 0.0.1 == 0.0.30"},
+                {new AgeDuration(0, 0, 30, false), new AgeDuration(0, 0, 1, false), new AgeDuration(0, 0, 30, false),      "0.0.30 +(-) 0.0.1 -(+) 0.0.1 == 0.0.30"},    //BUG ??
                 {new AgeDuration(0, 11, 29, false), new AgeDuration(0, 0, 1, false), new AgeDuration(0, 11, 29, false),    "0.11.29 +(-) 0.0.1 -(+) 0.0.1 == 0.11.29"},
-                {new AgeDuration(0, 11, 30, false), new AgeDuration(0, 0, 1, false), new AgeDuration(0, 11, 30, false),    "0.11.30 +(-) 0.0.1 -(+) 0.0.1 == 0.11.30"},
+                {new AgeDuration(0, 11, 30, false), new AgeDuration(0, 0, 1, false), new AgeDuration(0, 11, 30, false),    "0.11.30 +(-) 0.0.1 -(+) 0.0.1 == 0.11.30"},  //BUG ??
                 {new AgeDuration(0, 10, 29, false), new AgeDuration(0, 1, 2, false), new AgeDuration(0, 10, 29, false),    "0.10.29 +(-) 0.1.2 -(+) 0.1.2 == 0.10.29"},
-                {new AgeDuration(0, 10, 30, false), new AgeDuration(0, 1, 1, false), new AgeDuration(0, 10, 30, false),    "0.10.30 +(-) 0.1.1 -(+) 0.1.1 == 0.10.30"},
+                {new AgeDuration(0, 10, 30, false), new AgeDuration(0, 1, 1, false), new AgeDuration(0, 10, 30, false),    "0.10.30 +(-) 0.1.1 -(+) 0.1.1 == 0.10.30"},  //BUG ??
                 {new AgeDuration(0, 11, 0, false), new AgeDuration(0, 1, 0, false), new AgeDuration(0, 11, 0, false),      "0.11.0 +(-) 0.1.0 -(+) 0.1.0 == 0.11.0"},
                 {new AgeDuration(0, 0, 1, false),   new AgeDuration(0, 0, 30, false), new AgeDuration(0, 0, 1, false),     "0.0.1 +(-) 0.0.30 -(+) 0.0.30 == 0.0.1"},
                 {new AgeDuration(0, 0, 1, false),   new AgeDuration(10, 10, 10, false), new AgeDuration(0, 0, 1, false),   "0.0.1 +(-) 10.10.10 -(+) 10.10.10 == 0.0.1"}
@@ -233,9 +233,9 @@ public class AgeDurationTest {
                 {new AgeDuration(2, 11, 30, false), new AgeDuration(2, 11, 29, false), true, "2.11.30 >= 2.11.29"},
                 {new AgeDuration(0, 0, 1, true), new AgeDuration(0, 0, 0, false), true,      "-0.0.1 < 0.0.0"},
                 {new AgeDuration(0, 0, 1, true), new AgeDuration(0, 0, 1, false), false,     "-0.0.1 < 0.0.1"},
-                {new AgeDuration(1, 0, 0, true), new AgeDuration(0, 1, 1, true), false,      "-1.0.0 < -0.1.1"},   //Broken
-                {new AgeDuration(1, 0, 0, true), new AgeDuration(0, 11, 29, true), false,    "-1.0.0 < -0.11.29"}, //my
-                {new AgeDuration(2, 11, 30, true), new AgeDuration(2, 11, 29, true), false,  "-2.11.30 < -2.11.29"}//heart
+                {new AgeDuration(1, 0, 0, true), new AgeDuration(0, 1, 1, true), false,      "-1.0.0 < -0.1.1"},      //BUG
+                {new AgeDuration(1, 0, 0, true), new AgeDuration(0, 11, 29, true), false,    "-1.0.0 < -0.11.29"},    //BUG
+                {new AgeDuration(2, 11, 30, true), new AgeDuration(2, 11, 29, true), false,  "-2.11.30 < -2.11.29"}   //BUG
         };
     }
 
