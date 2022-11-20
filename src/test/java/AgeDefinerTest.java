@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
 
 public class AgeDefinerTest {
 
-    @Test(description = "Check Diff() function. Classes and Bounds", dataProvider = "getEqClassesAndBounds")
+    @Test(description = "Check Diff() function. Eq Classing and Boundary", dataProvider = "getEqClassesAndBounds")
     public void testDiffEqClassesAndBounds(Date dateEnd, Date dateStart, AgeDuration expected, String message) {
         AgeDuration result = AgeDefiner.Diff(dateEnd, dateStart);
         Assert.assertEquals(result, expected, message);
@@ -51,11 +51,11 @@ public class AgeDefinerTest {
                 //d2 > d1 and d, m, y transitions
                 {Date.from(new GregorianCalendar(2022, Calendar.JUNE, 15).toInstant()), Date.from(new GregorianCalendar(2019, Calendar.APRIL, 5).toInstant()),
                         new AgeDuration(3, 2, 10, false), "Diff(15.06.2022, 05.04.2019) == 3y 2m 10d"},
-                {Date.from(new GregorianCalendar(2022, Calendar.JUNE, 15).toInstant()), Date.from(new GregorianCalendar(2019, Calendar.APRIL, 25).toInstant()),
+                {Date.from(new GregorianCalendar(2022, Calendar.JUNE, 15).toInstant()), Date.from(new GregorianCalendar(2019, Calendar.APRIL, 25).toInstant()), //BUG
                         new AgeDuration(3, 1, 21, false), "Diff(15.06.2022, 25.04.2019) == 3y 1m 21d"},
                 {Date.from(new GregorianCalendar(2022, Calendar.JUNE, 15).toInstant()), Date.from(new GregorianCalendar(2019, Calendar.JULY, 5).toInstant()),
                         new AgeDuration(2, 11, 10, false), "Diff(15.06.2022, 05.07.2019) == 2y 11m 10d"},
-                {Date.from(new GregorianCalendar(2022, Calendar.JUNE, 15).toInstant()), Date.from(new GregorianCalendar(2019, Calendar.JUNE, 25).toInstant()),
+                {Date.from(new GregorianCalendar(2022, Calendar.JUNE, 15).toInstant()), Date.from(new GregorianCalendar(2019, Calendar.JUNE, 25).toInstant()),  //BUG
                         new AgeDuration(2, 11, 21, false), "Diff(15.06.2022, 25.06.2019) == 2y 11m 21d"},
                 //Zero
                 {Date.from(new GregorianCalendar(2022, Calendar.OCTOBER, 5).toInstant()), Date.from(new GregorianCalendar(2022, Calendar.OCTOBER, 5).toInstant()),
