@@ -1,6 +1,6 @@
 # AgeDefiner Java Telegram Bot
 
-The bot can calculate time length between two dates (e.g. age or length of experience etc.).
+[The bot](https://t.me/AgeDefinerBot) can calculate time length between two dates (e.g. age or length of experience etc.).
 Also, the bot can do arithmetical operations on that lengths.
 
 The bot operates as an interpreter of the specific commands. So it should be interacted using its syntax.
