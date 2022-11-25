@@ -68,6 +68,7 @@ public class AgeDeleteProvider {
             return "_Cancelled!_";
         }
         usrDeleteState.put(userID, DeleteState.NONE);
+        //TODO: Neither usrDeleteState nor userDeleteParam is not cleared. Here could be potential memory consumption issue while running for a long time and serving a lot of users...
         if (result) {
             return "_Deleted!_";
         }
