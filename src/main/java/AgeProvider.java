@@ -44,10 +44,12 @@ public class AgeProvider {
 
         for (int i = 0; i < aiInputs.getSize(); i++) {
             String exprLine = aiInputs.getExpression(i);
+
             LexemeAnalyser lexemeAnalyser = new LexemeAnalyser(userID);
             List<LexemeAnalyser.Lexeme> lexemes = lexemeAnalyser.lexemeAnalyze(exprLine);
             LexemeAnalyser.LexemeBuffer lexemeBuffer = new LexemeAnalyser.LexemeBuffer(lexemes);
             String evalResult = lexemeAnalyser.expression(lexemeBuffer).toString();
+
             String evalDescription = aiInputs.getDescription(i);
             if (evalDescription.isEmpty() && atp.containsKey(aiInputs.getExpression(i))) {
                 evalDescription = atp.getTokenDescription(aiInputs.getExpression(i));
