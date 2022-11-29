@@ -225,17 +225,20 @@ public class AgeDurationTest {
     public Object[][] getGreaterThan() {
         return new Object[][]{
                 {new AgeDuration(0, 0, 1, false), new AgeDuration(0, 0, 0, false), true,     "0.0.1 >= 0.0.0"},
+                {new AgeDuration(0, 0, 1, false), new AgeDuration(0, 0, 2, false), false,    "0.0.1 < 0.0.2"},
                 {new AgeDuration(0, 1, 0, false), new AgeDuration(0, 0, 1, false), true,     "0.1.0 >= 0.0.1"},
                 {new AgeDuration(0, 1, 0, false), new AgeDuration(0, 0, 30, false), true,    "0.1.0 >= 0.0.30"},
                 {new AgeDuration(1, 0, 0, false), new AgeDuration(0, 1, 1, false), true,     "1.0.0 >= 0.1.1"},
                 {new AgeDuration(1, 0, 0, false), new AgeDuration(0, 11, 29, false), true,   "1.0.0 >= 0.11.29"},
                 {new AgeDuration(0, 11, 30, false), new AgeDuration(0, 11, 29, false), true, "0.11.30 >= 0.11.29"},
                 {new AgeDuration(2, 11, 30, false), new AgeDuration(2, 11, 29, false), true, "2.11.30 >= 2.11.29"},
-                {new AgeDuration(0, 0, 1, true), new AgeDuration(0, 0, 0, false), true,      "-0.0.1 < 0.0.0"},
+                {new AgeDuration(1, 11, 30, false), new AgeDuration(2, 11, 29, false), false,"1.11.30 < 2.11.29"},
+                {new AgeDuration(0, 0, 1, true), new AgeDuration(0, 0, 0, false), false,     "-0.0.1 < 0.0.0"},
                 {new AgeDuration(0, 0, 1, true), new AgeDuration(0, 0, 1, false), false,     "-0.0.1 < 0.0.1"},
-                {new AgeDuration(1, 0, 0, true), new AgeDuration(0, 1, 1, true), false,      "-1.0.0 < -0.1.1"},      //BUG
-                {new AgeDuration(1, 0, 0, true), new AgeDuration(0, 11, 29, true), false,    "-1.0.0 < -0.11.29"},    //BUG
-                {new AgeDuration(2, 11, 30, true), new AgeDuration(2, 11, 29, true), false,  "-2.11.30 < -2.11.29"}   //BUG
+                {new AgeDuration(1, 0, 0, true), new AgeDuration(0, 1, 1, true), false,      "-1.0.0 < -0.1.1"},
+                {new AgeDuration(1, 0, 0, true), new AgeDuration(0, 11, 29, true), false,    "-1.0.0 < -0.11.29"},
+                {new AgeDuration(2, 11, 30, true), new AgeDuration(2, 11, 29, true), false,  "-2.11.30 < -2.11.29"},
+                {new AgeDuration(2, 10, 30, true), new AgeDuration(2, 11, 29, true), true,   "-2.10.30 > -2.11.29"}
         };
     }
 
@@ -266,7 +269,8 @@ public class AgeDurationTest {
                 {new AgeDuration(1, 0, 0, true), new AgeDuration(1, 0, 0, false),       "-1.0.0 != 1.0.0"},
                 {new AgeDuration(25, 11, 29, false), new AgeDuration(25, 11, 29, true), "25.11.29 != -25.11.29"},
                 {new AgeDuration(25, 11, 29, true), new AgeDuration(25, 11, 29, false), "-25.11.29 != 25.11.29"},
-                {new AgeDuration(25, 11, 30, false), new AgeDuration(25, 11, 29, false), "25.11.30 != 25.11.29"}
+                {new AgeDuration(25, 11, 30, false), new AgeDuration(25, 11, 29, false), "25.11.30 != 25.11.29"},
+                {new AgeDuration(0, 0, 1, false), null, "0.0.1 != null"}
         };
     }
 }
