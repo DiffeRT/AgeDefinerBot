@@ -13,10 +13,10 @@ The bot operates as an interpreter of the specific commands. So it should be int
 
 The common syntax is:
 
-> --config-alias _VarName_ = _Expression_ -m"_Description_"
+> -config-alias _VarName_ = _Expression_ -m"_Description_"
 
 where
-- ***--config-alias*** - required key word which tells the system to create new variable for the user <br>
+- ***-config-alias*** - required key word which tells the system to create new variable for the user <br>
 - ***VarName*** - the valid name of variable ('a..Z' and digits) <br>
 - ***Expression*** - any valid expression. It can contain Age(), Diff() functions or defined user variables.
   And any arithmetic operations with them like: Age() - Diff() + Variable. Here is the definition:
@@ -29,9 +29,9 @@ where
 
 Example:
  
->_--config-alias Neo = Age(02.09.1964) -m"Keanu Reeves age"_ <br>
-_--config-alias T800 = Age(30.07.1947) -m"Arnold Schwarzenegger age"_ <br>
-_--config-alias aDiff = Diff(02.09.1964, 30.07.1947) -m"Age difference between Arnold and Keanu"_
+>_-config-alias Neo = Age(02.09.1964) -m"Keanu Reeves age"_ <br>
+_-config-alias T800 = Age(30.07.1947) -m"Arnold Schwarzenegger age"_ <br>
+_-config-alias aDiff = Diff(02.09.1964, 30.07.1947) -m"Age difference between Arnold and Keanu"_
    
 - ***Neo*** - is the variable. Non case-sensitive
 - ***Age(02.09.1964)*** - is the function (date format is 'dd.mm.yyyy')
@@ -82,13 +82,13 @@ Age of Keanu Reeves on the Matrix release date:
 
 5) Additional features
 
-_--config-alias-show Neo_ - Show the key Neo
+_-config-alias-show Neo_ - Show the key Neo
    
-_--config-alias-show_ - Show all keys
+_-config-alias-show_ - Show all keys
 
-_--config-alias-delete aDiff_ - Delete the key aDiff
+_-config-alias-delete aDiff_ - Delete the key aDiff
 
-_--config-alias-delete -all_ - Delete all keys
+_-config-alias-delete -all_ - Delete all keys
 
 <h3>Local run</h3>
 

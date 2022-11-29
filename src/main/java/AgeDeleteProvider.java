@@ -25,7 +25,7 @@ public class AgeDeleteProvider {
 
     public String requestDeletion(String userID, String message) {
         String key;
-        int pos = "--config-alias-delete".length();
+        int pos = Commands.CONFIG_ALIAS_DELETE.length();
         StringBuilder sb = new StringBuilder();
         while (pos < message.length()) {
             char c = message.charAt(pos);
