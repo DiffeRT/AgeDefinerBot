@@ -158,7 +158,7 @@ public class AgeDurationTest {
     @DataProvider
     public Object[][] getSubPosVal() {
         return new Object[][]{
-                {new AgeDuration(1, 1, 1, false), new AgeDuration(1, 1, 1, false), new AgeDuration(0, 0, 0, false), "a - a == 0"},  //BUG
+                {new AgeDuration(1, 1, 1, false), new AgeDuration(1, 1, 1, false), new AgeDuration(0, 0, 0, false), "a - a == 0"},
                 {new AgeDuration(1, 1, 1, false), new AgeDuration(0, 0, 0, false), new AgeDuration(1, 1, 1, false), "a - 0 == a"},
                 {new AgeDuration(0, 0, 0, false), new AgeDuration(1, 1, 1, false), new AgeDuration(1, 1, 1, true),  "0 - a == -a"},
 
@@ -167,7 +167,8 @@ public class AgeDurationTest {
                 {new AgeDuration(1, 1, 1, false), new AgeDuration(2, 2, 2, false), new AgeDuration(1, 1, 1, true),  "1.1.1 - 2.2.2 == -1.1.1"},
 
                 {new AgeDuration(12, 11, 18, false), new AgeDuration(7, 5, 9, false), new AgeDuration(5, 6, 9, false),  "a - b, a > b"},
-                {new AgeDuration(7, 5, 9, false), new AgeDuration(12, 11, 18, false), new AgeDuration(5, 6, 9, true),  "a - b, a < b"}
+                {new AgeDuration(7, 5, 9, false), new AgeDuration(12, 11, 18, false), new AgeDuration(5, 6, 9, true),  "a - b, a < b"},
+                {new AgeDuration(7, 5, 9, false), new AgeDuration(12, 5, 8, false), new AgeDuration(4, 11, 29, true),  "a - b, a < b"}
         };
     }
 
