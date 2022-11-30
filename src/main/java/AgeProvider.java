@@ -72,7 +72,7 @@ public class AgeProvider {
             }
             pos++;
         }
-        key = sb.toString();
+        key = sb.toString().toLowerCase();
 
         if (key.isEmpty() || atp.containsKey(key)) {
             String result = atp.showTokens(key);
