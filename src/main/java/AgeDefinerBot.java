@@ -42,11 +42,11 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
         String userID = update.getMessage().getFrom().getId().toString();
         String reply;
 
-        if (message.equals(Commands.START)) {
+        if (Commands.isCommand(Commands.START, message)) {
             reply = AgeProvider.startCommandReply();
             sendMessage(chatID, reply, true);
         }
-        else if (message.contains(Commands.CONFIG_ALIAS_DELETE) || deleteProvider.waitingConfirmation(userID)) {
+        else if (Commands.isCommand(Commands.CONFIG_ALIAS_DELETE, message) || deleteProvider.waitingConfirmation(userID)) {
             if (deleteProvider.waitingConfirmation(userID)) {
                 try {
                     reply = deleteProvider.confirmDeletion(userID, message);
@@ -61,7 +61,7 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
                 sendMessage(chatID, reply, false);
             }
         }
-        else if (message.contains(Commands.CONFIG_ALIAS_SHOW)) {
+        else if (Commands.isCommand(Commands.CONFIG_ALIAS_SHOW, message)) {
             try {
                 reply = AgeProvider.doShowUserData(userID, message);
                 sendMessage(chatID, reply, false);
@@ -70,7 +70,7 @@ public class AgeDefinerBot extends TelegramLongPollingBot {
                 sendMessage(chatID, reply, false);
             }
         }
-        else if (message.contains(Commands.CONFIG_ALIAS)) {
+        else if (Commands.isCommand(Commands.CONFIG_ALIAS, message)) {
             try {
                 AgeProvider.doConfigParsing(userID, message);
                 sendMessage(chatID, "_Done!_", true);

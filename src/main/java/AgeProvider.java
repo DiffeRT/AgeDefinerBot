@@ -6,7 +6,7 @@ import java.util.List;
 public class AgeProvider {
 
     public static void doConfigParsing(String userID, String message) throws IOException {
-        int pos = Commands.CONFIG_ALIAS.length();
+        int pos = Commands.CONFIG_ALIAS.length() + 1;
         StringBuilder sb = new StringBuilder();
         while (pos < message.length()) {
             char c = message.charAt(pos);
@@ -63,7 +63,7 @@ public class AgeProvider {
     public static String doShowUserData(String userID, String message) {
         AgeTokenProvider atp = new AgeTokenProvider(userID);
         String key;
-        int pos = Commands.CONFIG_ALIAS_SHOW.length();
+        int pos = Commands.CONFIG_ALIAS_SHOW.length() + 1;
         StringBuilder sb = new StringBuilder();
         while (pos < message.length()) {
             char c = message.charAt(pos);
@@ -114,12 +114,12 @@ public class AgeProvider {
                 "Возраст Киану на момент релиза Матрицы:\n" +
                 "    34 years 6 months 29 days\n" +
                 "\n" +
-                "3) Можно складывать и вычитать\n" +
-                "_> Age(30.07.1947) - Age(02.09.1964)_\n" +
-                "17 years 1 months 3 days\n" +
-                "\n" +
-                "_> T800 - Neo -m\"Разница между Шварцом и Киану\"_\n" +
-                "Разница между Шварцом и Киану:\n" +
+                "3) Можно складывать и вычитать. Поддерживается многострочность\n" +
+                "_> Diff(11.11.1918, 28.07.1914) + Diff(02.09.1945, 01.09.1939) -m\"Длительность мировых войн\"_\n" +
+                "_> T800 - Neo -m\"Разница между Арнольдом и Киану\"_\n" +
+                "Длительность мировых войн\n" +
+                "  10 years 3 months 15 days\n" +
+                "Разница между Арнольдом и Киану:\n" +
                 "  17 years 1 months 3 days\n" +
                 "\n" +
                 "4) Дополнительные возможности\n" +
