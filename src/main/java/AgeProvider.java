@@ -6,7 +6,7 @@ import java.util.List;
 public class AgeProvider {
 
     public static void doConfigParsing(String userID, String message) throws IOException {
-        int pos = "--config-alias".length();
+        int pos = Commands.CONFIG_ALIAS.length() + 1;
         StringBuilder sb = new StringBuilder();
         while (pos < message.length()) {
             char c = message.charAt(pos);
@@ -63,7 +63,7 @@ public class AgeProvider {
     public static String doShowUserData(String userID, String message) {
         AgeTokenProvider atp = new AgeTokenProvider(userID);
         String key;
-        int pos = "--config-alias-show".length();
+        int pos = Commands.CONFIG_ALIAS_SHOW.length() + 1;
         StringBuilder sb = new StringBuilder();
         while (pos < message.length()) {
             char c = message.charAt(pos);
@@ -72,12 +72,12 @@ public class AgeProvider {
             }
             pos++;
         }
-        key = sb.toString();
+        key = sb.toString().toLowerCase();
 
         if (key.isEmpty() || atp.containsKey(key)) {
             String result = atp.showTokens(key);
             if (result.isEmpty()) {
-                throw new RuntimeException("Ну не шмогла я, не шмогла... Там ничего нет. Сначала сохраните что-то используя команду: --config-alias");
+                throw new RuntimeException("Ну не шмогла я, не шмогла... Там ничего нет. Сначала сохраните что-то используя команду: " + Commands.CONFIG_ALIAS);
             }
             return result;
         }
@@ -94,9 +94,9 @@ public class AgeProvider {
             e.printStackTrace();
         }
         return "1) Переменные задаются так\n" +
-                "_--config-alias Neo = Age(02.09.1964) -m\"Возраст Киану Ривза\"_\n" +
-                "_--config-alias Schwarz = Age(30.07.1947) -m\"Возраст Арнольда\"_\n" +
-                "_--config-alias aDiff = Diff(02.09.1964, 30.07.1947) -m\"Разница между Шварцом и Киану\"_\n" +
+                "_-config-alias Neo = Age(02.09.1964) -m\"Возраст Киану Ривза\"_\n" +
+                "_-config-alias T800 = Age(30.07.1947) -m\"Возраст Арнольда\"_\n" +
+                "_-config-alias aDiff = Diff(02.09.1964, 30.07.1947) -m\"Разница между Арнольдом и Киану\"_\n" +
                 "*Neo* - это переменная (только символы 'a..Z' и цифры)\n" +
                 "*Age(02.09.1964)* - функция (формат даты только такой как тут)\n" +
                 "*-m\"Возраст Киану Ривза\"* - описание (обязательно в кавычках)\n" +
@@ -114,19 +114,19 @@ public class AgeProvider {
                 "Возраст Киану на момент релиза Матрицы:\n" +
                 "    34 years 6 months 29 days\n" +
                 "\n" +
-                "3) Можно складывать и вычитать\n" +
-                "_> Age(30.07.1947) - Age(02.09.1964)_\n" +
-                "17 years 1 months 3 days\n" +
-                "\n" +
-                "_> Schwarz - Neo -m\"Разница между Шварцом и Киану\"_\n" +
-                "Разница между Шварцом и Киану:\n" +
+                "3) Можно складывать и вычитать. Поддерживается многострочность\n" +
+                "_> Diff(11.11.1918, 28.07.1914) + Diff(02.09.1945, 01.09.1939) -m\"Длительность мировых войн\"_\n" +
+                "_> T800 - Neo -m\"Разница между Арнольдом и Киану\"_\n" +
+                "Длительность мировых войн\n" +
+                "  10 years 3 months 15 days\n" +
+                "Разница между Арнольдом и Киану:\n" +
                 "  17 years 1 months 3 days\n" +
                 "\n" +
                 "4) Дополнительные возможности\n" +
-                "_--config-alias-show Neo_ - показать ключ Neo\n" +
-                "_--config-alias-show_ - показать все ключи\n" +
-                "_--config-alias-delete aDiff_ - удалить ключ aDiff\n" +
-                "_--config-alias-delete -all_ - удалить все ключи\n" +
+                "_-config-alias-show Neo_ - показать ключ Neo\n" +
+                "_-config-alias-show_ - показать все ключи\n" +
+                "_-config-alias-delete aDiff_ - удалить ключ aDiff\n" +
+                "_-config-alias-delete -all_ - удалить все ключи\n" +
                 "\n" +
                 "_P.S. Бот 'клал' такси Bolt на GDPR. Он собирает и использует все что Вы ему отдаете_";
     }
