@@ -17,8 +17,9 @@ public class AgeDefiner {
                 days = day2 - day1;
             }
             else {
+                int prevMontIndex = month2 > 1 ? month2 - 1 : 12;   // (m2 - 1) - is needed here
                 month2--;
-                days = (day2 + DateUtils.daysInMonth(year1, month1) - day1);
+                days = (day2 + DateUtils.daysInMonth(year2, prevMontIndex) - day1);
             }
             if (month2 >= month1) {
                 months = month2 - month1;
