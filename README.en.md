@@ -60,8 +60,9 @@ Available functions: Age(d1) и Diff(d2, d1). Age -> Diff(Now(), d1)
 
 3) It could be added or subtracted each other
 ````
-> Age(30.07.1947) - Age(02.09.1964)
-17 years 1 months 3 days
+> Diff(11.11.1918, 28.07.1914) + Diff(02.09.1945, 01.09.1939) -m"The length of World Wars"
+The length of World Wars
+  10 years 3 months 15 days
 ````
 
 ````
