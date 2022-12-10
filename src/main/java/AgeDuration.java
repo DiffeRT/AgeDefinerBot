@@ -28,15 +28,25 @@ public class AgeDuration {
             return new AgeDuration(years, months, days, this.isNegative);
         }
         else if (other.isNegative) {
-            return this.Sub(other);
+            return this.Sub(other.unaryNegative());
         }
         else {
-            return other.Sub(this);
+            return other.Sub(this.unaryNegative());
         }
     }
 
     public AgeDuration Sub(AgeDuration other) {
-        if (this.greaterThan(other)) {
+        if (this.equals(other)) {
+            return new AgeDuration(0, 0, 0, false);
+        }
+
+        if (this.isNegative && !other.isNegative || !this.isNegative && other.isNegative) {  // -a - b || a - (-b)
+            return this.Add(other.unaryNegative());
+        }
+        else if (this.isNegative) {  // -a - (-b)
+            return other.unaryNegative().Sub(this.unaryNegative());
+        }
+        else if (this.greaterThan(other)) {  // a - b
             int years = this.y - other.y;
             int months = this.m - other.m;
             int days = this.d - other.d;
@@ -111,22 +121,25 @@ public class AgeDuration {
     }
 
     public boolean greaterThan(AgeDuration other) {
-        if (this.y > other.y) { //XXX bug then negative
-            return true;
+        if (this.isNegative == other.isNegative) {
+            if (this.y > other.y) {
+                return !this.isNegative;
+            }
+            else if (this.y < other.y) {
+                return this.isNegative;
+            }
+            else if (this.m > other.m) {      //this.y == other.y
+                return !this.isNegative;
+            }
+            else if (this.m < other.m) {
+                return this.isNegative;
+            }
+            else                              //this.m == other.m
+                return (this.d > other.d) && !this.isNegative;
         }
-        else if (this.y < other.y) {
-            return false;
+        else {
+            return !this.isNegative;
         }
-        else if (this.m > other.m) {      //this.y == other.y
-            return true;
-        }
-        else if (this.m < other.m) {
-            return false;
-        }
-        else if (this.d > other.d) {      //this.m == other.m
-            return true;
-        }
-        else return false;
     }
 
 }
