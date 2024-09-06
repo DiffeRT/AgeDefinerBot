@@ -1,4 +1,9 @@
 public class AgeInputParser {
+    private static boolean isMessage(String msg) {
+        //В Маке кавычки какого-то хрена заменяются на открывающие, закрывающие и всякую такую лабудень
+        return msg.equals("-m\u201C") || msg.equals("-m\u201D") || msg.equals("-m\"");
+    }
+
     //-m"The message is here" -> The message is here
     private static String getMessage(String msg) {
         if (!msg.isEmpty()) {
@@ -27,7 +32,7 @@ public class AgeInputParser {
                         sbMsg.append(c);
                         pos++;
                         // Not -m" pattern
-                        if (sbMsg.length() == 3 && !sbMsg.toString().equals("-m\"")) {
+                        if ( sbMsg.length() == 3 && !isMessage(sbMsg.toString()) ) {
                             pos = posBuff;
                             isMSG = false;
                             sbMsg.setLength(0);

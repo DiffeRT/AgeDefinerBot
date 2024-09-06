@@ -121,6 +121,9 @@ public class AgeDuration {
     }
 
     public boolean greaterThan(AgeDuration other) {
+        if (this.equals(other)) {
+            return true;
+        }
         if (this.isNegative == other.isNegative) {
             if (this.y > other.y) {
                 return !this.isNegative;
@@ -128,14 +131,17 @@ public class AgeDuration {
             else if (this.y < other.y) {
                 return this.isNegative;
             }
-            else if (this.m > other.m) {      //this.y == other.y
+            else if (this.m > other.m) {
+                //At this point we know -> this.y == other.y
                 return !this.isNegative;
             }
             else if (this.m < other.m) {
                 return this.isNegative;
             }
-            else                              //this.m == other.m
+            else {
+                //At this point we know -> this.m == other.m
                 return (this.d > other.d) && !this.isNegative;
+            }
         }
         else {
             return !this.isNegative;
