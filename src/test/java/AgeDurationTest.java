@@ -262,6 +262,8 @@ public class AgeDurationTest {
                 {new AgeDuration(0, 11, 30, false), new AgeDuration(0, 11, 29, false), true, "0.11.30  >= 0.11.29"},
                 {new AgeDuration(2, 11, 30, false), new AgeDuration(2, 11, 29, false), true, "2.11.30  >= 2.11.29"},
                 {new AgeDuration(1, 11, 30, false), new AgeDuration(2, 11, 29, false), false,"1.11.30  <  2.11.29"},
+                {new AgeDuration(2, 2, 2, false), new AgeDuration(2, 2, 2, false), true,    "2.2.2    >= 2.2.2"},
+                {new AgeDuration(2, 2, 2, true), new AgeDuration(2, 2, 2, true), true,      "-2.2.2   >=-2.2.2"},
                 {new AgeDuration(0, 0, 1, true), new AgeDuration(0, 0, 0, false), false,     "-0.0.1   <  0.0.0"},
                 {new AgeDuration(0, 0, 1, true), new AgeDuration(0, 0, 1, false), false,     "-0.0.1   <  0.0.1"},
                 {new AgeDuration(1, 0, 0, true), new AgeDuration(0, 1, 1, true), false,      "-1.0.0   < -0.1.1"},

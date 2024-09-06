@@ -77,7 +77,7 @@ public class AgeProvider {
         if (key.isEmpty() || atp.containsKey(key)) {
             String result = atp.showTokens(key);
             if (result.isEmpty()) {
-                throw new RuntimeException("Ну не шмогла я, не шмогла... Там ничего нет. Сначала сохраните что-то используя команду: " + Commands.CONFIG_ALIAS);
+                throw new RuntimeException("Ну не шмогла я, не шмогла... Там ничего нет. Сначала сохраните что-то используя команду:\n" + Commands.CONFIG_ALIAS + " <Name> = <Expression> m\"Description\"");
             }
             return result;
         }
@@ -94,9 +94,9 @@ public class AgeProvider {
             e.printStackTrace();
         }
         return "1) Переменные задаются так\n" +
-                "_-config-alias Neo = Age(02.09.1964) -m\"Возраст Киану Ривза\"_\n" +
-                "_-config-alias T800 = Age(30.07.1947) -m\"Возраст Арнольда\"_\n" +
-                "_-config-alias aDiff = Diff(02.09.1964, 30.07.1947) -m\"Разница между Арнольдом и Киану\"_\n" +
+                "_" + Commands.CONFIG_ALIAS + " Neo = Age(02.09.1964) -m\"Возраст Киану Ривза\"_\n" +
+                "_" + Commands.CONFIG_ALIAS + " T800 = Age(30.07.1947) -m\"Возраст Арнольда\"_\n" +
+                "_" + Commands.CONFIG_ALIAS + " aDiff = Diff(02.09.1964, 30.07.1947) -m\"Разница между Арнольдом и Киану\"_\n" +
                 "*Neo* - это переменная (только символы 'a..Z' и цифры)\n" +
                 "*Age(02.09.1964)* - функция (формат даты только такой как тут)\n" +
                 "*-m\"Возраст Киану Ривза\"* - описание (обязательно в кавычках)\n" +
@@ -123,12 +123,12 @@ public class AgeProvider {
                 "  17 years 1 months 3 days\n" +
                 "\n" +
                 "4) Дополнительные возможности\n" +
-                "_-config-alias-show Neo_ - показать ключ Neo\n" +
-                "_-config-alias-show_ - показать все ключи\n" +
-                "_-config-alias-delete aDiff_ - удалить ключ aDiff\n" +
-                "_-config-alias-delete -all_ - удалить все ключи\n" +
+                "_" + Commands.CONFIG_ALIAS_SHOW + " Neo_ - показать ключ Neo\n" +
+                "_" + Commands.CONFIG_ALIAS_SHOW + "_ - показать все ключи\n" +
+                "_" + Commands.CONFIG_ALIAS_DELETE + " aDiff_ - удалить ключ aDiff\n" +
+                "_" + Commands.CONFIG_ALIAS_DELETE + " -all_ - удалить все ключи\n" +
                 "\n" +
-                "_P.S. Бот 'клал' такси Bolt на GDPR. Он собирает и использует все что Вы ему отдаете_";
+                "_P.S. Бот 'клал' такси Bolt на GDPR. Он собирает и использует все данные что Вы ему отдаете_";
     }
 
 }
